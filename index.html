@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>AI Blueprint Agent</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <div class="card">
+        <h1>AI Blueprint Agent</h1>
+        <form id="agentForm">
+            <input type="text" name="idea" placeholder="Enter your AI idea..." required>
+            <button type="submit">Generate</button>
+        </form>
+        <div id="result"></div>
+    </div>
+
+    <script>
+    document.getElementById("agentForm").addEventListener("submit", async function(e) {
+        e.preventDefault();
+        const idea = this.idea.value;
+        const response = await fetch("/generate", {
+            method: "POST",
+            headers: { "Content-Type": "application/x-www-form-urlencoded" },
+            body: new URLSearchParams({ idea })
+        });
+        const data = await response.json();
+        document.getElementById("result").innerText = data.response;
+    });
+    </script>
+</body>
+</html>
